@@ -59,7 +59,8 @@ setup(
     #
     #   py_modules=["my_module"],
     #
-    packages=find_packages(exclude=['contrib', 'docs', 'tests']),  # Required
+    packages=find_packages('src'),  # Required
+    package_dir={"": "src"},
     python_requires='>=3.5, <4',
 
     install_requires=['sqlalchemy'],  # Optional
