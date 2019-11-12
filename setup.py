@@ -67,7 +67,7 @@ setup(
 
     extras_require={  # Optional
         'dev': [],
-        'test': [],
+        'test': ['unittest'],
     },
 
     project_urls={  # Optional

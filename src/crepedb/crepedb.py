@@ -1,6 +1,6 @@
 import sys
 from sqlalchemy import create_engine
-from models import Base
+from .models import Base
 
 
 class CrepeDB:
@@ -10,7 +10,7 @@ class CrepeDB:
             self.engine = create_engine(path)
         except:
             print('Error', file=sys.stderr)
-        Base.metadata.create_all(self.engine) # migrate
+        Base.metadata.create_all(self.engine)  # migrate
 
 
 if __name__ == '__main__':
