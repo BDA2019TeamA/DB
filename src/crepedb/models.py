@@ -4,17 +4,21 @@ from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
+
 class Shop(Base):
     __tablename__ = 'shops'
     id = Column(Integer, primary_key=True)
+    name = Column(String(255))
     address = Column(String(255))
     tel = Column(String(11))
+
 
 class Site(Base):
     __tablename__ = 'sites'
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
     site_url = Column(String(255))
+
 
 class Page(Base):
     __tablename__ = 'pages'
@@ -24,6 +28,7 @@ class Page(Base):
     genre = Column(String(128))
     site = relationship('Site')
     shop = relationship('Shop')
+
 
 class Review(Base):
     __tablename__ = 'reviews'
