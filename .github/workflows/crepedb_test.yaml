@@ -1,0 +1,20 @@
+name: Test CrepeDB
+on: [push]
+
+jobs:
+  build:
+    name: Run test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          version: '3.7'
+          architecture: 'x64'
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install setuptools
+      - name: Run test
+        run: python setup.py test
