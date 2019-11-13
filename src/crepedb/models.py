@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -28,6 +28,8 @@ class Page(Base):
     genre = Column(String(128))
     site = relationship('Site')
     shop = relationship('Shop')
+    site_id = Column(Integer, ForeignKey('sites.id'))
+    shop_id = Column(Integer, ForeignKey('shops.id'))
 
 
 class Review(Base):
@@ -37,3 +39,4 @@ class Review(Base):
     evaluation = Column(Integer)
     original_id = Column(Integer)
     page = relationship('Page')
+    page_id = Column(Integer, ForeignKey('pages.id'))
