@@ -24,3 +24,6 @@ class CrepeDB:
 
     def insert_shop(self, shop):
         return insert.insert_shop(self.session, shop)
+
+    def insert_shops(self, shops):
+        return insert.insert_shops(self.session, shops)
