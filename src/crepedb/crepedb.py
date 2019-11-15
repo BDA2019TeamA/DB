@@ -1,8 +1,9 @@
 from . import insert
+from . import select
 from sqlalchemy.orm import sessionmaker, scoped_session
 import sys
 from sqlalchemy import create_engine
-from .models import Base
+from .models import Base, Shop
 
 
 class CrepeDB:
@@ -27,3 +28,6 @@ class CrepeDB:
 
     def insert_shops(self, shops):
         return insert.insert_shops(self.session, shops)
+
+    def select_shop(self, limit=None, pagenum=1, order_by=Shop.id, descend=False):
+        return select.select_shop(self.session, limit, pagenum, order_by, descend)
