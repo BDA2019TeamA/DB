@@ -31,7 +31,7 @@ db.insert_shop({'name': 'Crepe食堂', 'tel': '01234567890'})
 - Shop (店舗情報)
 - Site (出典サイト情報)
 - Page (各サイト毎の店舗情報)
-- Reviewer (レビュー情報)
+- Review (レビュー情報)
 
 
 ### Shop
@@ -75,7 +75,7 @@ db.insert_shop({'name': 'Crepe食堂', 'tel': '01234567890'})
 | レビュアー             | reviewer    | String(255)  | -      | o        | `Abc`         |
 | コメント               | comment     | String(1024) | -      | o        | `おいしい`    |
 | 評価                   | evaluation  | Integer      | -      | o        | `1`           |
-| 出典元ReviewID         | original_id | Integer      | -      | x        | `999`         |
+| 出典元ReviewID         | original_id | Integer      | -      | o        | `999`         |
 | PageID                 | page_id     | Integer      | -      | x        | `3`           |
 | Pageデータ(Selectのみ) | page        | Page         | -      | x        |               |
 
