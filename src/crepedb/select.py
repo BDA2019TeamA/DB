@@ -25,7 +25,6 @@ def select_shop_lazy(session, limit=None,
         # first loop
         shops = session.query(Shop) \
                     .order_by(desc(order_by)) \
-                    .filter(order_by < getattr(shops[-1], order_by.key)) \
                     .limit(limit) \
                     .all()
         yield shops
