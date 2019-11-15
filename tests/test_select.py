@@ -28,13 +28,18 @@ class TestSelect(unittest.TestCase):
             {'name': 'Crepe食堂', 'tel': '01234567890'},
             {'name': 'Crepe喫茶', 'tel': '0312345678'},
             {'name': 'Crepeレストラン', 'address': '東京都目黒区'},
+            {'name': 'Crepeレストラン 2号店', 'address': '東京都目黒区'},
+            {'name': 'Crepeレストラン 3号店', 'address': '東京都目黒区'},
         ]
         insertedShops = self.db.insert_shops(shops)
 
-        for inserted, selected in zip(insertedShops, self.db.select_shop_lazy(limit=1)):
-            self.assertEqual(inserted, selected[0])
+        for inserted, selected in zip(range(0, len(insertedShops), 2),
+                                      self.db.select_shop_lazy(limit=2)):
+            self.assertEqual(insertedShops[inserted:inserted + 2], selected)
 
         insertedShops.reverse()
 
-        for inserted, selected in zip(insertedShops, self.db.select_shop_lazy(limit=1, descend=True)):
+        for inserted, selected in zip(
+                insertedShops, self.db.select_shop_lazy(limit=1,
+                                                        descend=True)):
             self.assertEqual(inserted, selected[0])
