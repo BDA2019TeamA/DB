@@ -36,6 +36,7 @@ class Review(Base):
     __tablename__ = 'reviews'
     id = Column(Integer, primary_key=True)
     reviewer = Column(String(255))
+    comment = Column(String(1024))
     evaluation = Column(Integer)
     original_id = Column(Integer)
     page = relationship('Page')
