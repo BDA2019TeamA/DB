@@ -21,6 +21,17 @@ class TestSelect(unittest.TestCase):
         
         res_shop = self.db.select_shop(limit=1, pagenum=2) 
         self.assertEqual(res_shop[0], inserted[2])
+    
+    def test_select_shop_lazy(self):
+        shops = [
+            {'name': 'Crepe食堂', 'tel': '01234567890'},
+            {'name': 'Crepe喫茶', 'tel': '0312345678'},
+            {'name': 'Crepeレストラン', 'address': '東京都目黒区'},
+        ]
+        inserted = self.db.insert_shops(shops)
+
+        for inserted, selected in zip(inserted, self.db.select_shop_lazy(limit=1)):
+            self.assertEqual(inserted, selected[0])
 
 
 

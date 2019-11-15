@@ -18,3 +18,34 @@ def select_shop(session,
                       .limit(limit) \
                       .offset(limit * pagenum) \
                       .all()
+
+def select_shop_lazy(session, limit=None,
+                     order_by=Shop.id, descend=False):
+    if descend:
+        # first loop
+        shops = session.query(Shop) \
+                    .order_by(desc(order_by)) \
+                    .filter(order_by < getattr(shops[-1], order_by.key)) \
+                    .limit(limit) \
+                    .all()
+        yield shops
+        while shops:
+            shops = session.query(Shop) \
+                        .order_by(desc(order_by)) \
+                        .limit(limit) \
+                        .all()
+            yield shops
+    else:
+        # first loop
+        shops = session.query(Shop) \
+                    .order_by(asc(order_by)) \
+                    .limit(limit) \
+                    .all()
+        yield shops
+        while True:
+            shops = session.query(Shop) \
+                        .order_by(asc(order_by)) \
+                        .filter(order_by > getattr(shops[-1], order_by.key)) \
+                        .limit(limit) \
+                        .all()
+            yield shops
