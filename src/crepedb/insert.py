@@ -10,25 +10,30 @@ def getParam(dic, key):
 
 
 def insert_shop(session, shop):
-    item = Shop()
-    item.name = getParam(shop, 'name')
-    item.address = getParam(shop, 'address')
-    item.tel = getParam(shop, 'tel')
+    item = session.query(Shop).filter(shop.tel == Shop.tel).first()
+    if item is None:
+        item = Shop()
+        item.name = getParam(shop, 'name')
+        item.address = getParam(shop, 'address')
+        item.tel = getParam(shop, 'tel')
 
-    session.add(item)
-    session.commit()
+        session.add(item)
+        session.commit()
 
     return item
 
 
 def insert_shops(session, shops):
+    tels = {item.tel for item in session.query(Shop).all()}
     items = []
     for shop in shops:
-        item = Shop()
-        item.name = getParam(shop, 'name')
-        item.address = getParam(shop, 'address')
-        item.tel = getParam(shop, 'tel')
-        items.append(item)
+        if shop.tel not in tels:
+            item = Shop()
+            item.name = getParam(shop, 'name')
+            item.address = getParam(shop, 'address')
+            item.tel = getParam(shop, 'tel')
+            items.append(item)
+
     session.add_all(items)
     session.commit()
 
