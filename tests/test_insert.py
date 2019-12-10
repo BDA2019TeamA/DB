@@ -28,3 +28,10 @@ class TestInsert(unittest.TestCase):
         self.assertEqual(res[1].name, 'Crepeレストラン')
         self.assertEqual(res[1].address, '東京都目黒区')
         self.assertEqual(res[1].tel, None)
+    
+    def test_insert_already_existing_shop(self):
+        sample = self.db.insert_shop({'name': 'Crepe喫茶', 'tel': '0312345678'})
+        test = self.db.insert_shop({'name': 'Crepe喫茶', 'tel': '0312345678'})
+
+        self.assertEqual(id(sample), id(test))
+
