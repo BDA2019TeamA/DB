@@ -24,7 +24,7 @@ setup(
     description='',  # Optional
     long_description=long_description,  # Optional
     long_description_content_type='text/markdown',  # Optional (see note above)
-    author='BDA2019TeaｍA',  # Optional
+    author='BDA2019TeamA',  # Optional
 
     # Classifiers help users find your project by categorizing it.
     #
