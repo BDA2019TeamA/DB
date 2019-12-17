@@ -32,5 +32,5 @@ class CrepeDB:
     def select_shop(self, limit=None, pagenum=1, order_by=Shop.id, descend=False):
         return select.select_shop(self.session, limit, pagenum, order_by, descend)
 
-    def select_shop_lazy(self, limit=None, order_by=Shop.id, descend=False):
+    def select_shop_lazy(self, limit=1, order_by=Shop.id, descend=False):
         return select.select_shop_lazy(self.session, limit, order_by, descend)

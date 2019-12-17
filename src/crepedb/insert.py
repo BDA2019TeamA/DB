@@ -10,7 +10,7 @@ def getParam(dic, key):
 
 
 def insert_shop(session, shop):
-    item = session.query(Shop).filter(getParam(shop, 'tel') == Shop.tel).first()
+    item = session.query(Shop).filter(getParam(shop, 'address') == Shop.address).first()
     if item is None:
         item = Shop()
         item.name = getParam(shop, 'name')
