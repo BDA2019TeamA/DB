@@ -11,6 +11,7 @@ class Shop(Base):
     name = Column(String(255))
     address = Column(String(255))
     tel = Column(String(11))
+    place_id = Column(String(30), unique=True) # Google MapのPlace ID(一致検索用)
 
 
 class Site(Base):
