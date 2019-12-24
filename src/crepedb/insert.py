@@ -60,6 +60,7 @@ def insert_shops(session, shops):
             item.name = getParam(shop, 'name')
             item.address = getParam(shop, 'address')
             items.append(item)
+            continue
 
         info = get_info_from_google_without_phone_number(shop['tel'])
 
@@ -69,6 +70,7 @@ def insert_shops(session, shops):
             item.name = getParam(shop, 'name')
             item.address = getParam(shop, 'address')
             items.append(item)
+            continue
 
         if info["place_id"] not in place_ids:
             item = Shop()
