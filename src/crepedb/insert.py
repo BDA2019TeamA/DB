@@ -12,75 +12,25 @@ def getParam(dic, key):
     return None
 
 def insert_shop(session, shop):
-    if getParam(shop, 'tel') is None:
-        # 一致検索をかけずに直接放り込みます
-        item = Shop()
-        item.name = getParam(shop, 'name')
-        item.address = getParam(shop, 'address')
-        session.add(item)
-        session.commit()
-
-        return item
-
-    info = get_info_from_google_without_phone_number(shop['tel'])
-
-    if info is None:
-        # 情報取得に失敗。一致検索をかけずに直接放り込みます
-        item = Shop()
-        item.tel = shop['tel']
-        item.name = getParam(shop, 'name')
-        item.address = getParam(shop, 'address')
-        session.add(item)
-        session.commit()
-
-        return item
-
-    item = session.query(Shop).filter(getParam(info, 'place_id') == Shop.place_id).first()
-    if item is None:
-        item = Shop()
-        item.place_id = getParam(info, 'place_id')
-        item.name = getParam(info, 'name')
-        item.address = getParam(info, 'address')
-
-    if non_ip_phone_pattern.search(shop['tel']):
-        item.tel = shop['tel']
+    item = Shop()
+    item.name = shop['name']
+    item.address = shop['address']
+    item.tel = shop['tel']
+    item.place_id = shop['place_id']
 
     session.add(item)
     session.commit()
 
     return item
 
-
 def insert_shops(session, shops):
-    place_ids = {item.place_id for item in session.query(Shop).all()}
     items = []
     for shop in shops:
-        if getParam(shop, 'tel') is None:
-            item = Shop()
-            item.name = getParam(shop, 'name')
-            item.address = getParam(shop, 'address')
-            items.append(item)
-            continue
-
-        info = get_info_from_google_without_phone_number(shop['tel'])
-
-        if info is None:
-            item = Shop()
-            item.tel = shop['tel']
-            item.name = getParam(shop, 'name')
-            item.address = getParam(shop, 'address')
-            items.append(item)
-            continue
-
-        if info["place_id"] not in place_ids:
-            item = Shop()
-            item.place_id = getParam(info, 'place_id')
-            item.name = getParam(info, 'name')
-            item.address = getParam(info, 'address')
-        else:
-            item = session.query(Shop).filter(info['place_id'] == Shop.place_id).first()
-        if non_ip_phone_pattern.search(shop['tel']):
-            item.tel = shop['tel']
+        item = Shop()
+        item.name = shop['name']
+        item.address = shop['address']
+        item.tel = shop['tel']
+        item.place_id = shop['place_id']
  
         items.append(item)
 
