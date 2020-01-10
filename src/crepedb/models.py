@@ -27,6 +27,8 @@ class Page(Base):
     evaluation = Column(Integer)
     url = Column(String(512))
     genre = Column(String(128))
+    # 各サイトの"店舗ID"(Review挿入時の検索用)
+    shop_id_by_site = Column(String(128))
     site = relationship('Site')
     shop = relationship('Shop')
     site_id = Column(Integer, ForeignKey('sites.id'))
