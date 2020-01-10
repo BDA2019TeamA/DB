@@ -70,8 +70,8 @@ def insert_page(session, page):
     item.evaluation = getParam(page, 'evaluation')
     item.url = getParam(page, 'url')
     item.genre = getParam(page, 'genre')
-    site_id = getParam(page, 'site_id')
-    shop_id = getParam(page, 'shop_id')
+    item.site_id = getParam(page, 'site_id')
+    item.shop_id = getParam(page, 'shop_id')
 
     session.add(item)
     session.commit()
@@ -85,9 +85,9 @@ def insert_pages(session, pages):
         item.evaluation = getParam(page, 'evaluation')
         item.url = getParam(page, 'url')
         item.genre = getParam(page, 'genre')
-        site_id = getParam(page, 'site_id')
-        shop_id = getParam(page, 'shop_id')
-        items.push(item)
+        item.site_id = getParam(page, 'site_id')
+        item.shop_id = getParam(page, 'shop_id')
+        items.append(item)
 
     session.add_all(items)
     session.commit()
@@ -96,11 +96,11 @@ def insert_pages(session, pages):
 def insert_review(session, review):
     item = Review()
 
-    reviewer = getParam(review, 'reviewer')
-    comment = getParam(review, 'comment')
-    evaluation = getParam(review, 'evaluation')
-    original_id = getParam(review, 'original_id')
-    page_id = getParam(review, 'page_id')
+    item.reviewer = getParam(review, 'reviewer')
+    item.comment = getParam(review, 'comment')
+    item.evaluation = getParam(review, 'evaluation')
+    item.original_id = getParam(review, 'original_id')
+    item.page_id = getParam(review, 'page_id')
 
     session.add(item)
     session.commit()
@@ -112,11 +112,12 @@ def insert_reviews(session, reviews):
     for review in reviews:
         item = Review()
 
-        reviewer = getParam(review, 'reviewer')
-        comment = getParam(review, 'comment')
-        evaluation = getParam(review, 'evaluation')
-        original_id = getParam(review, 'original_id')
-        page_id = getParam(review, 'page_id')
+        item.reviewer = getParam(review, 'reviewer')
+        item.comment = getParam(review, 'comment')
+        item.evaluation = getParam(review, 'evaluation')
+        item.original_id = getParam(review, 'original_id')
+        item.page_id = getParam(review, 'page_id')
+        items.append(item)
 
     session.add_all(items)
     session.commit()
