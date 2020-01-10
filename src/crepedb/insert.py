@@ -13,10 +13,10 @@ def getParam(dic, key):
 
 def insert_shop(session, shop):
     item = Shop()
-    item.name = shop['name']
-    item.address = shop['address']
-    item.tel = shop['tel']
-    item.place_id = shop['place_id']
+    item.name = getParam(shop, 'name')
+    item.address = getParam(shop, 'address')
+    item.tel = getParam(shop, 'tel')
+    item.place_id = getParam(shop, 'place_id')
 
     session.add(item)
     session.commit()
@@ -27,10 +27,10 @@ def insert_shops(session, shops):
     items = []
     for shop in shops:
         item = Shop()
-        item.name = shop['name']
-        item.address = shop['address']
-        item.tel = shop['tel']
-        item.place_id = shop['place_id']
+        item.name = getParam(shop, 'name')
+        item.address = getParam(shop, 'address')
+        item.tel = getParam(shop, 'tel')
+        item.place_id = getParam(shop, 'place_id')
  
         items.append(item)
 
@@ -70,6 +70,7 @@ def insert_page(session, page):
     item.evaluation = getParam(page, 'evaluation')
     item.url = getParam(page, 'url')
     item.genre = getParam(page, 'genre')
+    item.shop_id_by_site = getParam(page, 'shop_id_by_site')
     item.site_id = getParam(page, 'site_id')
     item.shop_id = getParam(page, 'shop_id')
 
