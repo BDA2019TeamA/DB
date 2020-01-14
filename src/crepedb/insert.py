@@ -3,9 +3,6 @@ from . import models
 from .models import Shop, Site, Page, Review
 from .util import get_info_from_google_without_phone_number
 
-import re
-non_ip_phone_pattern = re.compile(r"^(?!050)")
-
 def getParam(dic, key):
     if key in dic:
         return dic[key]
@@ -70,7 +67,7 @@ def insert_page(session, page):
     item.evaluation = getParam(page, 'evaluation')
     item.url = getParam(page, 'url')
     item.genre = getParam(page, 'genre')
-    item.shop_id_by_site = getParam(page, 'shop_id_by_site')
+    item.original_id = getParam(page, 'original_id')
     item.site_id = getParam(page, 'site_id')
     item.shop_id = getParam(page, 'shop_id')
 
@@ -88,6 +85,7 @@ def insert_pages(session, pages):
         item.genre = getParam(page, 'genre')
         item.site_id = getParam(page, 'site_id')
         item.shop_id = getParam(page, 'shop_id')
+        item.original_id = getParam(page, 'original_id')
         items.append(item)
 
     session.add_all(items)
