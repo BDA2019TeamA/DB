@@ -43,3 +43,41 @@ class TestSelect(unittest.TestCase):
                 insertedShops, self.db.select_shop_lazy(limit=1,
                                                         descend=True)):
             self.assertEqual(inserted, selected[0])
+
+    # 他はロジックが全く一緒なので飛ばします
+
+    def test_select_shop_from_place_id(self):
+        self.db.insert_shop({
+            'name': '漁師料理 九絵',
+            'address': '日本、〒152-0033 東京都目黒区大岡山２丁目２−１',
+            'tel': '03-5731-5230',
+            'place_id': 'ChIJlWQdPS71GGARNCq9u5kpvUY'
+        })
+        shop = self.db.select_shop_from_place_id('ChIJlWQdPS71GGARNCq9u5kpvUY')
+        self.assertEqual(shop.name, '漁師料理 九絵')
+        self.assertEqual(shop.address, '日本、〒152-0033 東京都目黒区大岡山２丁目２−１')
+        self.assertEqual(shop.tel, '03-5731-5230')
+
+    def test_select_site_from_name(self):
+        self.db.insert_site({
+            'name': 'ぐるなび', 'url': 'gnavi.co.jp'
+        })
+        site = self.db.select_site_from_name('ぐるなび')
+        self.assertEqual(site.url, 'gnavi.co.jp')
+
+    def test_select_page_from_original_id(self):
+        shop = self.db.insert_shop({'name': 'Crepe食堂', 'tel': '01234567890', 'address': 'ぽぽぽ'})
+        site = self.db.insert_site({'name': 'ぐるなび', 'url': 'gnavi.co.jp'})
+        pages = self.db.insert_page({
+            'evaluation': 5,
+            'url': 'gnavi.co.jp/shops/1',
+            'genre': '食堂',
+            'original_id': 'g1',
+            'site_id': site.id,
+            'shop_id': shop.id
+        })
+
+        page = self.db.select_page_from_original_id('g1')
+        self.assertEqual(page.shop.name, 'Crepe食堂')
+        self.assertEqual(page.site.name, 'ぐるなび')
+        self.assertEqual(page.genre, '食堂')
