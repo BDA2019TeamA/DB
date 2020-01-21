@@ -11,6 +11,7 @@ class Shop(Base):
     name = Column(String(255))
     address = Column(String(255))
     tel = Column(String(11))
+    place_id = Column(String(30), unique=True) # Google MapのPlace ID(一致検索用)
 
 
 class Site(Base):
@@ -26,6 +27,7 @@ class Page(Base):
     evaluation = Column(Integer)
     url = Column(String(512))
     genre = Column(String(128))
+    original_id = Column(String(128))
     site = relationship('Site')
     shop = relationship('Shop')
     site_id = Column(Integer, ForeignKey('sites.id'))

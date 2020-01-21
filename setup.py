@@ -63,7 +63,7 @@ setup(
     package_dir={"": "src"},
     python_requires='>=3.5, <4',
 
-    install_requires=['sqlalchemy'],  # Optional
+    install_requires=['sqlalchemy', 'requests'],  # Optional
 
     extras_require={  # Optional
         'dev': [],

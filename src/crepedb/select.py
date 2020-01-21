@@ -1,7 +1,7 @@
 import sqlalchemy
 from sqlalchemy import asc, desc
 from sqlalchemy.orm import sessionmaker
-from .models import Shop
+from .models import Shop, Site, Page, Review
 
 
 def select_shop(session,
@@ -42,3 +42,18 @@ def select_shop_lazy(session, limit=None, order_by=Shop.id, descend=False):
 
         last = getattr(shops[-1], order_by.key)
         yield shops
+
+def select_shop_from_place_id(session, place_id):
+    return session.query(Shop) \
+        .filter(Shop.place_id == place_id) \
+        .scalar()
+
+def select_site_from_name(session, name):
+    return session.query(Site) \
+        .filter(Site.name == name) \
+        .scalar()
+
+def select_page_from_original_id(session, original_id):
+    return session.query(Page) \
+        .filter(Page.original_id == original_id) \
+        .scalar()
