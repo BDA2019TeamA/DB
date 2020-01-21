@@ -46,6 +46,8 @@ def insert_site(session, site):
     session.add(item)
     session.commit()
 
+    return item
+
 
 def insert_sites(session, sites):
     items = []
@@ -57,8 +59,10 @@ def insert_sites(session, sites):
         item.url = getParam(site, 'url')
         items.append(item)
 
-    session.add_all()
+    session.add_all(items)
     session.commit()
+
+    return items
 
 
 def insert_page(session, page):
@@ -74,6 +78,7 @@ def insert_page(session, page):
     session.add(item)
     session.commit()
 
+    return item
 
 def insert_pages(session, pages):
     items = []
@@ -91,6 +96,7 @@ def insert_pages(session, pages):
     session.add_all(items)
     session.commit()
 
+    return items
 
 def insert_review(session, review):
     item = Review()
@@ -104,6 +110,7 @@ def insert_review(session, review):
     session.add(item)
     session.commit()
 
+    return item
 
 def insert_reviews(session, reviews):
     items = []
@@ -120,3 +127,5 @@ def insert_reviews(session, reviews):
 
     session.add_all(items)
     session.commit()
+
+    return items

@@ -19,7 +19,7 @@ def get_info_from_google(tel):
     r = requests.get(FIND_PLACE_ENDPOINT,
                      params={
                          "key": GOOGLE_MAPS_API_KEY,
-                         "inputtype": "text",
+                         "inputtype": "textquery",
                          "input": tel,
                      })
 
@@ -73,7 +73,7 @@ def get_info_from_google_without_phone_number(tel):
     r = requests.get(FIND_PLACE_ENDPOINT,
                      params={
                          "key": GOOGLE_MAPS_API_KEY,
-                         "inputtype": "text",
+                         "inputtype": "textquery",
                          "input": tel,
                          "fields": "place_id,name,formatted_address"
                      })
