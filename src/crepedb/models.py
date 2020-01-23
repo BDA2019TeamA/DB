@@ -43,3 +43,20 @@ class Review(Base):
     original_id = Column(Integer)
     page = relationship('Page')
     page_id = Column(Integer, ForeignKey('pages.id'))
+
+class ReviewScore(Base):
+    __tablename__ = 'reviewscores'
+    id = Column(Integer, primary_key=True)
+    review = relationship('Review')
+    review_id = Column(Integer, ForeignKey('reviews.id'))
+    category = Column(String(128))
+    score = Column(Integer)
+
+class ShopScore(Base):
+    __tablename__ = 'shopscores'
+    id = Column(Integer, primary_key=True)
+    shop = relationship('Shop')
+    shop_id = Column(Integer, ForeignKey('shops.id'))
+    category = Column(String(128))
+    score = Column(Integer)
+

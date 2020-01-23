@@ -1,6 +1,6 @@
 from sqlalchemy.orm import sessionmaker
 from . import models
-from .models import Shop, Site, Page, Review
+from .models import Shop, Site, Page, Review, ReviewScore, ShopScore
 from .util import get_info_from_google_without_phone_number
 
 def getParam(dic, key):
@@ -129,3 +129,54 @@ def insert_reviews(session, reviews):
     session.commit()
 
     return items
+
+def insert_review_score(session, score):
+    item = ReviewScore()
+    item.review_id = getParam(score, 'review_id')
+    item.category = getParam(score, 'category')
+    item.score = getParam(score, 'score')
+
+    session.add(item)
+    session.commit()
+
+    return item
+
+def insert_review_scores(session, scores):
+    items = []
+    for score in scores:
+        item = ReviewScore()
+        item.review_id = getParam(score, 'review_id')
+        item.category = getParam(score, 'category')
+        item.score = getParam(score, 'score')
+        items.append(item)
+
+    session.add_all(items)
+    session.commit()
+
+    return items
+
+def insert_shop_score(session, score):
+    item = ShopScore()
+    item.shop_id = getParam(score, 'shop_id')
+    item.category = getParam(score, 'category')
+    item.score = getParam(score, 'score')
+
+    session.add(item)
+    session.commit()
+
+    return item
+
+def insert_shop_scores(session, scores):
+    items = []
+    for score in scores:
+        item = ShopScore()
+        item.shop_id = getParam(score, 'shop_id')
+        item.category = getParam(score, 'category')
+        item.score = getParam(score, 'score')
+        items.append(item)
+
+    session.add_all(items)
+    session.commit()
+
+    return items
+

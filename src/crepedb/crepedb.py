@@ -86,6 +86,18 @@ class CrepeDB:
             res.append(self.insert_review_am(review))
         return res
 
+    def insert_review_score(self, review):
+        # 仕様が確定したら実装する
+        raise NotImplementedError
+
+    def insert_review_scores(self, reviews):
+        # 仕様が確定したら実装する
+        raise NotImplementedError
+
+    def aggregate_score(self):
+        # ReviewScoreをShopScoreに集計する 仕様が確定したら実装する
+        raise NotImplementedError
+
     def select_shop(self, limit=None, pagenum=1, order_by=Shop.id, descend=False):
         return select.select_shop(self.session, limit, pagenum, order_by, descend)
 
