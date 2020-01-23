@@ -57,6 +57,8 @@ class CrepeDB:
                     'name': info['name'],
                     'address': info['address'],
                     'place_id': info['place_id'],
+                    'lat': info['lat'],
+                    'lng': info['lng'],
                     'tel': page['tel'] if non_ip_phone_pattern.search(page['tel']) else None
                 })
             page['shop_id'] = shop.id

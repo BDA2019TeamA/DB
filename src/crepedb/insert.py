@@ -14,6 +14,8 @@ def insert_shop(session, shop):
     item.address = getParam(shop, 'address')
     item.tel = getParam(shop, 'tel')
     item.place_id = getParam(shop, 'place_id')
+    item.latitude = getParam(shop, 'lat')
+    item.longitude = getParam(shop, 'lng')
 
     session.add(item)
     session.commit()
@@ -28,6 +30,8 @@ def insert_shops(session, shops):
         item.address = getParam(shop, 'address')
         item.tel = getParam(shop, 'tel')
         item.place_id = getParam(shop, 'place_id')
+        item.latitude = getParam(shop, 'lat')
+        item.longitude = getParam(shop, 'lng')
  
         items.append(item)
 

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -12,6 +12,8 @@ class Shop(Base):
     address = Column(String(255))
     tel = Column(String(11))
     place_id = Column(String(30), unique=True) # Google MapのPlace ID(一致検索用)
+    latitude = Column(Float)
+    longitude = Column(Float)
 
 
 class Site(Base):
