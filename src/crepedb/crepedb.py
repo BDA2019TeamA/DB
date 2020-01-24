@@ -4,7 +4,7 @@ from . import util
 from sqlalchemy.orm import sessionmaker, scoped_session
 import sys
 from sqlalchemy import create_engine
-from .models import Base, Shop
+from .models import Base, Shop, Site, Page, Review
 
 import re
 non_ip_phone_pattern = re.compile(r"^(?!050)")
@@ -93,6 +93,24 @@ class CrepeDB:
 
     def select_shop_lazy(self, limit=1, order_by=Shop.id, descend=False):
         return select.select_shop_lazy(self.session, limit, order_by, descend)
+
+    def select_site(self, limit=None, pagenum=1, order_by=Site.id, descend=False):
+        return select.select_site(self.session, limit, pagenum, order_by, descend)
+
+    def select_site_lazy(self, limit=None, pagenum=1, order_by=Page.id, descend=False):
+        return select.select_site_lazy(self.session, limit, order_by, descend)
+
+    def select_page(self, limit=None, pagenum=1, order_by=Review.id, descend=False):
+        return select.select_page(self.session, limit, pagenum, order_by, descend)
+
+    def select_page_lazy(self, limit=None, order_by=Page.id, descend=False):
+        return select.select_page_lazy(self.session, limit, order_by, descend)
+
+    def select_review(self, limit=None, pagenum=1, order_by=Page.id, descend=False):
+        return select.select_review(self.session, limit, pagenum, order_by, descend)
+
+    def select_review_lazy(self, limit=None, order_by=Page.id, descend=False):
+        return select.select_review_lazy(self.session, limit, order_by, descend)
 
     def select_shop_from_place_id(self, place_id):
         return select.select_shop_from_place_id(self.session, place_id)
