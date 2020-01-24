@@ -64,37 +64,37 @@ def select_review_score(session,
                 order_by=ReviewScore.id,
                 descend=False):
     order = desc if descend else asc
-    if limit is None:
-        return session.query(ReviewScore) \
-                      .order_by(order(order_by)) \
-                      .all()
+    query = session.query(ReviewScore)
+    if order_by is ReviewScore.id:
+        query = query.order_by(order(order_by))
     else:
-        return session.query(ReviewScore) \
-                      .order_by(order(order_by)) \
-                      .limit(limit) \
-                      .offset(limit * pagenum) \
-                      .all()
+        query = query.order_by(order(order_by), ReviewScore.id.asc())
+    if limit is None:
+        return query.all()
+    else:
+        return query.offset(limit * pagenum) \
+                    .limit(limit) \
+                    .all()
 
 
 def select_review_score_lazy(session, limit=None, order_by=ReviewScore.id, descend=False):
     reviews = None
-    last = None
+    offset = 0
+    order = desc if descend else asc
 
     while True:
-        query = session.query(ReviewScore) \
-            .order_by(desc(order_by) if descend else asc(order_by))
+        query = session.query(ReviewScore)
+        if order_by is ReviewScore.id:
+            query = query.order_by(order(order_by))
+        else:
+            query = query.order_by(order(order_by), ReviewScore.id.asc())
 
-        if reviews and descend:
-            query = query.filter(order_by < last)
-        if reviews and not descend:
-            query = query.filter(order_by > last)
-
-        reviews = query.limit(limit).all()
+        reviews = query.offset(offset).limit(limit).all()
 
         if not reviews:
             break
 
-        last = getattr(reviews[-1], order_by.key)
+        offset += len(reviews)
         yield reviews
 
 def select_review_score_from_shop_id(session, shop_id,
@@ -104,8 +104,11 @@ def select_review_score_from_shop_id(session, shop_id,
                     .join(Review, Review.id == ReviewScore.review_id)\
                     .join(Page, Page.id == Review.page_id)\
                     .join(Shop, Shop.id == Page.shop_id)\
-                    .filter(Shop.id == shop_id)\
-                    .order_by(order(order_by))
+                    .filter(Shop.id == shop_id)
+    if order_by is ReviewScore.id:
+        query = query.order_by(order(order_by))
+    else:
+        query = query.order_by(order(order_by), ReviewScore.id.asc())
     if limit is None:
         return query.all()
     else:
@@ -120,35 +123,35 @@ def select_shop_score(session,
                 order_by=ShopScore.id,
                 descend=False):
     order = desc if descend else asc
-    if limit is None:
-        return session.query(ShopScore) \
-                      .order_by(order(order_by)) \
-                      .all()
+    query = session.query(ShopScore)
+    if order_by is ShopScore.id:
+        query = query.order_by(order(order_by))
     else:
-        return session.query(ShopScore) \
-                      .order_by(order(order_by)) \
-                      .limit(limit) \
-                      .offset(limit * pagenum) \
-                      .all()
+        query = query.order_by(order(order_by), ShopScore.id.asc())
+    if limit is None:
+        return query.all()
+    else:
+        return query.offset(limit * pagenum) \
+                    .limit(limit) \
+                    .all()
 
 
 def select_shop_score_lazy(session, limit=None, order_by=ShopScore.id, descend=False):
     shops = None
-    last = None
+    offset = 0
+    order = desc if descend else asc
 
     while True:
-        query = session.query(ShopScore) \
-            .order_by(desc(order_by) if descend else asc(order_by))
+        query = session.query(ShopScore)
+        if order_by is ShopScore.id:
+            query = query.order_by(order(order_by))
+        else:
+            query = query.order_by(order(order_by), ShopScore.id.asc())
 
-        if shops and descend:
-            query = query.filter(order_by < last)
-        if shops and not descend:
-            query = query.filter(order_by > last)
-
-        shops = query.limit(limit).all()
+        shops = query.offset(offset).limit(limit).all()
 
         if not shops:
             break
 
-        last = getattr(shops[-1], order_by.key)
+        offset += len(shops)
         yield shops
