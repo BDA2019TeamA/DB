@@ -10,7 +10,7 @@ class Shop(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String(255))
     address = Column(String(255))
-    tel = Column(String(11))
+    tel = Column(String(15))
     place_id = Column(String(30), unique=True) # Google MapのPlace ID(一致検索用)
 
 
