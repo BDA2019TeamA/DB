@@ -36,12 +36,14 @@ db.insert_shop({'name': 'Crepe食堂', 'tel': '01234567890'})
 
 ### Shop
 
-|          | カラム名 | 型          | Unique | Nullable | 例             |
-| -------- | -------- | ----------- | ------ | -------- | -------------- |
-| ShopID   | id       | Integer     | o      | x        | `1`(自動付与)  |
-| 店舗名   | name     | String(255) | -      | x        | `Crepe食堂`    |
-| 住所     | address  | String(255) | -      | o        | `東京都目黒区` |
-| 電話番号 | tel      | String(11)  | -      | o        | `0123456789`   |
+|          | カラム名  | 型          | Unique | Nullable | 例             |
+| -------- | --------  | ----------- | ------ | -------- | -------------- |
+| ShopID   | id        | Integer     | o      | x        | `1`(自動付与)  |
+| 店舗名   | name      | String(255) | -      | x        | `Crepe食堂`    |
+| 住所     | address   | String(255) | -      | o        | `東京都目黒区` |
+| 電話番号 | tel       | String(11)  | -      | o        | `0123456789`   |
+| 緯度     | latitude  | Float       | -      | x        | `38.000`       |
+| 経度     | longitude | Float       | -      | x        | `135.000`      |
 
 
 ### Site
