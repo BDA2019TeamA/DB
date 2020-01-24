@@ -32,6 +32,8 @@ db.insert_shop({'name': 'Crepe食堂', 'tel': '01234567890'})
 - Site (出典サイト情報)
 - Page (各サイト毎の店舗情報)
 - Review (レビュー情報)
+- ReviewScore (レビューごとのスコア)
+- ShopScore (店舗ごとのスコア)
 
 
 ### Shop
@@ -78,6 +80,25 @@ db.insert_shop({'name': 'Crepe食堂', 'tel': '01234567890'})
 | 出典元ReviewID         | original_id | Integer      | -      | o        | `999`         |
 | PageID                 | page_id     | Integer      | -      | x        | `3`           |
 | Pageデータ(Selectのみ) | page        | Page         | -      | x        |               |
+
+### ReviewScore
+|                          | カラム名  | 型          | Unique | Nullable | 例            |
+| ------------------------ | --------- | ----------- | ------ | -------- | ------------- |
+| ReviewScoreID            | id        | Integer     | o      | x        | `1`(自動付与) |
+| Reviewデータ(Selectのみ) | review    | Review      | -      | o        |               |
+| ReviewID                 | review_id | Integer     | -      | o        | `1`           |
+| 評価項目                 | category  | String(128) | -      | o        | `価格`        |
+| スコア                   | score     | Float       | -      | x        | `2.1`         |
+
+### ShopScore
+|                        | カラム名 | 型          | Unique | Nullable | 例            |
+| ---------------------- | -------- | ----------- | ------ | -------- | ------------- |
+| ShopScoreID            | id       | Integer     | o      | x        | `1`(自動付与) |
+| Shopデータ(Selectのみ) | shop     | Shop        | -      | x        |               |
+| ShopID                 | shop_id  | Integer     | -      | x        | `1`           |
+| 評価項目               | category | String(128) | -      | o        | `価格`        |
+| スコア                 | score    | Float       | -      | x        | `2.1`         |
+
 
 
 

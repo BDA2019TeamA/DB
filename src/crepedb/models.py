@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -50,7 +50,7 @@ class ReviewScore(Base):
     review = relationship('Review')
     review_id = Column(Integer, ForeignKey('reviews.id'))
     category = Column(String(128))
-    score = Column(Integer)
+    score = Column(Float)
 
 class ShopScore(Base):
     __tablename__ = 'shopscores'
@@ -58,5 +58,5 @@ class ShopScore(Base):
     shop = relationship('Shop')
     shop_id = Column(Integer, ForeignKey('shops.id'))
     category = Column(String(128))
-    score = Column(Integer)
+    score = Column(Float)
 
