@@ -215,6 +215,8 @@ class TestInsert(unittest.TestCase):
         self.assertEqual(shop.address, '日本、〒152-0033 東京都目黒区大岡山２丁目２−１')
         self.assertEqual(shop.tel, '03-5731-5230')
         self.assertEqual(shop.place_id, 'ChIJlWQdPS71GGARNCq9u5kpvUY')
+        self.assertEqual(shop.latitude, "35.607969")
+        self.assertEqual(shop.longitude, "139.6855287")
         self.assertEqual(pages[0].site_id, sites[0].id)
         self.assertEqual(pages[1].site_id, sites[1].id)
         self.assertEqual(pages[0].shop_id, shop.id)

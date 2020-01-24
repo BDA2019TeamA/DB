@@ -52,6 +52,8 @@ def get_info_from_google(tel):
     res["name"] = details["name"]
     res["tel"] = details["formatted_phone_number"]
     res["address"] = details["formatted_address"]
+    res["lat"] = details["geometry"]["location"]["lat"]
+    res["lng"] = details["geometry"]["location"]["lng"]
     res["place_id"] = details["place_id"]
 
     return res
@@ -75,7 +77,7 @@ def get_info_from_google_without_phone_number(tel):
                          "key": GOOGLE_MAPS_API_KEY,
                          "inputtype": "textquery",
                          "input": tel,
-                         "fields": "place_id,name,formatted_address"
+                         "fields": "place_id,name,formatted_address,geometry"
                      })
     if not r.status_code == requests.codes.ok:
         print("request failed:", r.reason, file=stderr)
@@ -94,5 +96,7 @@ def get_info_from_google_without_phone_number(tel):
     res["name"] = cand["name"]
     res["address"] = cand["formatted_address"]
     res["place_id"] = cand["place_id"]
+    res["lat"] = cand["geometry"]["location"]["lat"]
+    res["lng"] = cand["geometry"]["location"]["lng"]
 
     return res
