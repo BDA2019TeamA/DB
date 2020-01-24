@@ -4,43 +4,45 @@ from sqlalchemy.orm import sessionmaker
 from .models import Shop, Site, Page, Review
 
 
+# https://blog.mmmcorp.co.jp/blog/2018/03/22/sql_order_by/
+# order_byがid以外のときはidと組み合わせることでuniqueにする
 def select_shop(session,
                 limit=None,
                 pagenum=1,
                 order_by=Shop.id,
                 descend=False):
     order = desc if descend else asc
-    if limit is None:
-        return session.query(Shop) \
-                      .order_by(order(order_by)) \
-                      .all()
+    query = session.query(Shop)
+    if order_by is Shop.id:
+        query = query.order_by(order(order_by))
     else:
-        return session.query(Shop) \
-                      .order_by(order(order_by)) \
-                      .limit(limit) \
-                      .offset(limit * pagenum) \
-                      .all()
+        query = query.order_by(order(order_by), Shop.id.asc())
 
+    if limit is None:
+        return query.all()
+    else:
+        return query.offset(limit * pagenum) \
+                    .limit(limit) \
+                    .all()
 
 def select_shop_lazy(session, limit=None, order_by=Shop.id, descend=False):
     shops = None
-    last = None
+    order = desc if descend else asc
+    offset = 0
 
     while True:
-        query = session.query(Shop) \
-            .order_by(desc(order_by) if descend else asc(order_by))
+        query = session.query(Shop)
+        if order_by is Shop.id:
+            query = query.order_by(order(order_by))
+        else:
+            query = query.order_by(order(order_by), Shop.id.asc())
 
-        if shops and descend:
-            query = query.filter(order_by < last)
-        if shops and not descend:
-            query = query.filter(order_by > last)
-
-        shops = query.limit(limit).all()
+        shops = query.offset(offset).limit(limit).all()
 
         if not shops:
             break
 
-        last = getattr(shops[-1], order_by.key)
+        offset += len(shops)
         yield shops
 
 
@@ -68,37 +70,37 @@ def select_site(session,
                 order_by=Site.id,
                 descend=False):
     order = desc if descend else asc
-    if limit is None:
-        return session.query(Site) \
-                      .order_by(order(order_by)) \
-                      .all()
+    query = session.query(Site)
+    if order_by is Site.id:
+        query = query.order_by(order(order_by))
     else:
-        return session.query(Site) \
-                      .order_by(order(order_by)) \
-                      .limit(limit) \
-                      .offset(limit * pagenum) \
-                      .all()
+        query = query.order_by(order(order_by), Site.id.asc())
 
+    if limit is None:
+        return query.all()
+    else:
+        return query.offset(limit * pagenum) \
+                    .limit(limit) \
+                    .all()
 
 def select_site_lazy(session, limit=None, order_by=Site.id, descend=False):
     sites = None
-    last = None
+    order = desc if descend else asc
+    offset = 0
 
     while True:
-        query = session.query(Site) \
-            .order_by(desc(order_by) if descend else asc(order_by))
+        query = session.query(Site)
+        if order_by is Site.id:
+            query = query.order_by(order(order_by))
+        else:
+            query = query.order_by(order(order_by), Site.id.asc())
 
-        if sites and descend:
-            query = query.filter(order_by < last)
-        if sites and not descend:
-            query = query.filter(order_by > last)
-
-        sites = query.limit(limit).all()
+        sites = query.offset(offset).limit(limit).all()
 
         if not sites:
             break
 
-        last = getattr(sites[-1], order_by.key)
+        offset += len(sites)
         yield sites
 
 
@@ -108,37 +110,38 @@ def select_page(session,
                 order_by=Page.id,
                 descend=False):
     order = desc if descend else asc
-    if limit is None:
-        return session.query(Page) \
-                      .order_by(order(order_by)) \
-                      .all()
+    query = session.query(Page)
+    if order_by is Page.id:
+        query = query.order_by(order(order_by))
     else:
-        return session.query(Page) \
-                      .order_by(order(order_by)) \
-                      .limit(limit) \
-                      .offset(limit * pagenum) \
-                      .all()
+        query = query.order_by(order(order_by), Page.id.asc())
+
+    if limit is None:
+        return query.all()
+    else:
+        return query.offset(limit * pagenum) \
+                    .limit(limit) \
+                    .all()
 
 
 def select_page_lazy(session, limit=None, order_by=Page.id, descend=False):
     pages = None
-    last = None
+    order = desc if descend else asc
+    offset = 0
 
     while True:
-        query = session.query(Page) \
-            .order_by(desc(order_by) if descend else asc(order_by))
+        query = session.query(Page)
+        if order_by is Page.id:
+            query = query.order_by(order(order_by))
+        else:
+            query = query.order_by(order(order_by), Page.id.asc())
 
-        if pages and descend:
-            query = query.filter(order_by < last)
-        if pages and not descend:
-            query = query.filter(order_by > last)
-
-        pages = query.limit(limit).all()
+        pages = query.offset(offset).limit(limit).all()
 
         if not pages:
             break
 
-        last = getattr(pages[-1], order_by.key)
+        offset += len(pages)
         yield pages
 
 
@@ -148,35 +151,36 @@ def select_review(session,
                   order_by=Review.id,
                   descend=False):
     order = desc if descend else asc
-    if limit is None:
-        return session.query(Review) \
-                      .order_by(order(order_by)) \
-                      .all()
+    query = session.query(Review)
+    if order_by is Review.id:
+        query = query.order_by(order(order_by))
     else:
-        return session.query(Review) \
-                      .order_by(order(order_by)) \
-                      .limit(limit) \
-                      .offset(limit * pagenum) \
-                      .all()
+        query = query.order_by(order(order_by), Review.id.asc())
+
+    if limit is None:
+        return query.all()
+    else:
+        return query.offset(limit * pagenum) \
+                    .limit(limit) \
+                    .all()
 
 
 def select_review_lazy(session, limit=None, order_by=Review.id, descend=False):
     reviews = None
-    last = None
+    order = desc if descend else asc
+    offset = 0
 
     while True:
-        query = session.query(Review) \
-            .order_by(desc(order_by) if descend else asc(order_by))
+        query = session.query(Review)
+        if order_by is Review.id:
+            query = query.order_by(order(order_by))
+        else:
+            query = query.order_by(order(order_by), Review.id.asc())
 
-        if reviews and descend:
-            query = query.filter(order_by < last)
-        if reviews and not descend:
-            query = query.filter(order_by > last)
-
-        reviews = query.limit(limit).all()
+        reviews = query.offset(offset).limit(limit).all()
 
         if not reviews:
             break
 
-        last = getattr(reviews[-1], order_by.key)
+        offset += len(reviews)
         yield reviews

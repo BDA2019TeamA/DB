@@ -13,12 +13,18 @@ class TestSelect(unittest.TestCase):
             {'name': 'Crepe食堂', 'tel': '01234567890'},
             {'name': 'Crepe喫茶', 'tel': '0312345678'},
             {'name': 'Crepeレストラン', 'address': '東京都目黒区'},
+            {'name': '大岡山食堂', 'address': '東京都目黒区'}
         ]
         inserted = self.db.insert_shops(shops)
 
-        # sorted(['食堂','喫茶','レストラン'],reverse=True)[0] > '食堂'
+        # sorted(['食堂','喫茶','レストラン']) > ['レストラン', '喫茶', '食堂']
         res_shops = self.db.select_shop(order_by=Shop.name, descend=True)
-        self.assertEqual(res_shops[0], inserted[0])
+        self.assertEqual(res_shops[0], inserted[3])
+        self.assertEqual(res_shops[1], inserted[0])
+
+        # addressが入力されてい(て、それが同じであ)る2つのうち、IDが小さい方(レストラン)が出てくるはず
+        res_shops = self.db.select_shop(order_by=Shop.address, descend=True)
+        self.assertEqual(res_shops[0], inserted[2])
 
         res_shop = self.db.select_shop(limit=1, pagenum=2)
         self.assertEqual(res_shop[0], inserted[2])
