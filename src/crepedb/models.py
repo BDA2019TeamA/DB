@@ -49,7 +49,7 @@ class ReviewScore(Base):
     id = Column(Integer, primary_key=True)
     review = relationship('Review')
     review_id = Column(Integer, ForeignKey('reviews.id'))
-    category = Column(String(128))
+    category = Column(Integer)
     score = Column(Float)
 
 class ShopScore(Base):
@@ -57,6 +57,6 @@ class ShopScore(Base):
     id = Column(Integer, primary_key=True)
     shop = relationship('Shop')
     shop_id = Column(Integer, ForeignKey('shops.id'))
-    category = Column(String(128))
+    category = Column(Integer)
     score = Column(Float)
 
