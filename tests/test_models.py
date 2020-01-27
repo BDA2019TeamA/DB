@@ -7,5 +7,5 @@ class TestModels(unittest.TestCase):
         self.db = CrepeDB('sqlite:///:memory:')
 
     def test_tableList(self):
-        self.assertEqual(set(['pages', 'reviews', 'shops', 'sites']),
+        self.assertEqual(set(['pages', 'reviews', 'shops', 'sites', 'reviewscores', 'shopscores']),
                          set(self.db.engine.table_names()))
